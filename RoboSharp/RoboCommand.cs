@@ -180,7 +180,7 @@ namespace RoboSharp
         public Task Start(string domain = "", string username = "",
 	        string password = "")
         {
-	        return Start(null, domain, username, password);
+	        return Start(new CancellationTokenSource(), domain, username, password);
         }
 
         public Task Start( CancellationTokenSource tokenSource, string domain = "", string username = "", string password = "" )
