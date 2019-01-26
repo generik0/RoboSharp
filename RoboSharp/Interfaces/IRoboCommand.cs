@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace RoboSharp.Interfaces
 {
@@ -19,6 +20,7 @@ namespace RoboSharp.Interfaces
         void Pause();
         void Resume();
         Task Start(string domain = "", string username = "", string password = "");
+        Task Start(CancellationTokenSource tokenSource, string domain = "", string username = "", string password = "");
         void Stop();
         void Dispose();
     }
