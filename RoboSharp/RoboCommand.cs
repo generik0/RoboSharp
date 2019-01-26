@@ -180,7 +180,7 @@ namespace RoboSharp
         public Task Start(string domain = "", string username = "",
 	        string password = "")
         {
-	        return Start(new CancellationTokenSource(), domain, username, password);
+	        return Start(null, domain, username, password);
         }
 
         public Task Start( CancellationTokenSource tokenSource, string domain = "", string username = "", string password = "" )
@@ -188,7 +188,7 @@ namespace RoboSharp
             Debugger.Instance.DebugMessage("RoboCommand started execution.");
             hasError = false;
 	    
-	    var cancellationToken = tokenSource.Token;
+	    var cancellationToken = tokenSource?.Token ?? new CancellationTokenSource().Token;
 
             // make sure source path is valid
             if (!Directory.Exists(CopyOptions.Source.Replace("\"", "")))
@@ -197,7 +197,7 @@ namespace RoboSharp
                 hasError = true;
                 OnCommandError?.Invoke(this, new ErrorEventArgs("The Source directory does not exist."));
                 Debugger.Instance.DebugMessage("RoboCommand execution stopped due to error.");
-		tokenSource.Cancel(true);
+                return null;
             }
 
             #region Create Destination Directory
